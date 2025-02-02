@@ -1,9 +1,9 @@
-function fillText(context, x, y, content = "hackCBS") {
+function fillText(context, x, y, width, content = "hackCBS") {
 	context.font = "48px serif";
 	context.textAlign = "center";
 	context.textBaseline = "middle";
 	context.fillStyle = "white";
-	context.fillText(content, x, y);
+	context.fillText(content, x, y, width);
 }
 function fillCircle(context, x, y, radius, color = "green") {
 	context.beginPath();
@@ -18,6 +18,7 @@ function fillCircle(context, x, y, radius, color = "green") {
 	const height = canvas.height;
 	const sliderInputRadius = document.getElementById("sliderInputRadius");
 	const sliderInputSpeed = document.getElementById("sliderInputSpeed");
+	const colorPicker = document.getElementById("favcolor");
 	const min_radius = 20;
 	const context = canvas.getContext("2d");
 
@@ -29,6 +30,7 @@ function fillCircle(context, x, y, radius, color = "green") {
 	// we need direction to be seperated from the speed, because while increasing/decreasing speed we were unintentionally maniplulating the direction also
 	let dircetionX = 1;
 	let dircetionY = 1;
+	let color = "red";
 	let start;
 
 	const padding = 0;
@@ -37,6 +39,10 @@ function fillCircle(context, x, y, radius, color = "green") {
 		let sp = parseFloat(sliderInputSpeed.value);
 		dx = sp;
 		dy = sp;
+	});
+
+	colorPicker.addEventListener("input", (event) => {
+		color = colorPicker.value;
 	});
 
 	function step(timestamp) {
@@ -82,8 +88,8 @@ function fillCircle(context, x, y, radius, color = "green") {
 			height - 2 * padding,
 		);
 		// context.strokeRect(0, 0, canvas.width, canvas.height);
-		fillCircle(context, x, y, radius, "red");
-		// fillText(context, x, y);
+		fillCircle(context, x, y, radius, color);
+		fillText(context, x, y, radius * 2);
 
 		// console.log(elapsed);
 
