@@ -138,6 +138,10 @@ class Ball {
 		}
 	});
 
+	sliderInputSpeed.addEventListener("change", () => {
+		sliderInputSpeed.value = sliderInputSpeed.min;
+	});
+
 	colorPicker.addEventListener("input", () => {
 		ball1.color = colorPicker.value;
 		ball2.color = colorPicker.value;
