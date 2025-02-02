@@ -48,6 +48,14 @@ class Ball {
 		this.radius = radius;
 		this.accelarationY = gravity;
 
+		console.log(this.VelocityX, this.VelocityY);
+		if (Math.abs(this.VelocityX) <= 10 && Math.abs(this.VelocityY) <= 10) {
+			this.VelocityX = 0;
+			this.VelocityY = 0;
+			this.y = height - this.radius;
+			return;
+		}
+
 		this.VelocityX += this.accelarationX * dt;
 		this.VelocityY += this.accelarationY * dt;
 		this.VelocityX *= this.drag;
@@ -109,6 +117,19 @@ class Ball {
 
 	sliderInputSpeed.addEventListener("input", () => {
 		let sp = parseFloat(sliderInputSpeed.value);
+		// if the balls are on the ground
+		if (!ball1.VelocityX) {
+			ball1.VelocityX += sp;
+		}
+		if (!ball1.VelocityY) {
+			ball1.VelocityY += -sp;
+		}
+		if (!ball2.VelocityX) {
+			ball2.VelocityX += sp;
+		}
+		if (!ball2.VelocityY) {
+			ball2.VelocityY += -sp;
+		}
 		ball1.VelocityX = sp * Math.sign(ball1.VelocityX);
 		ball1.VelocityY = sp * Math.sign(ball1.VelocityY);
 		if (ball2) {
@@ -127,7 +148,8 @@ class Ball {
 			start = timestamp;
 		}
 
-		const dt = (timestamp - start) / 1000.0;
+		// to prevent dt getting higher than 1/60, i.e. more than 60 fps
+		let dt = Math.min((timestamp - start) / 1000.0, 0.016599999999998546);
 		start = timestamp;
 
 		width = window.innerWidth;
@@ -146,8 +168,8 @@ class Ball {
 				VelocityY: speed * randomDirection(),
 			});
 		}
-		ball1.updateCoordinates(radius, padding, width, height, dt);
-		ball2.updateCoordinates(radius, padding, width, height, dt);
+		ball1.updateCoordinates(radius, padding, width, height, dt, 1300);
+		ball2.updateCoordinates(radius, padding, width, height, dt, 1300);
 
 		context.clearRect(0, 0, width, height);
 
