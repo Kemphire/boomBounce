@@ -49,7 +49,7 @@ class Ball {
 		this.accelarationY = gravity;
 
 		console.log(this.VelocityX, this.VelocityY);
-		if (Math.abs(this.VelocityX) <= 10 && Math.abs(this.VelocityY) <= 10) {
+		if (Math.abs(this.VelocityX) <= 5 && Math.abs(this.VelocityY) <= 5) {
 			this.VelocityX = 0;
 			this.VelocityY = 0;
 			this.y = height - this.radius;
