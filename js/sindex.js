@@ -9,6 +9,7 @@ class Ball {
 		y,
 		radius,
 		text,
+		density,
 		textColor = "white",
 		color = "red",
 		VelocityX = 0,
@@ -26,6 +27,9 @@ class Ball {
 		this.accelarationY = 0;
 		this.restituion = 0.9;
 		this.drag = 0.99;
+		this.density = density;
+		// do same for position vector also
+		this.vel = { VelocityX, VelocityY };
 	}
 
 	fillCircle(context) {
@@ -33,6 +37,9 @@ class Ball {
 		context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
 		context.fillStyle = this.color;
 		context.fill();
+	}
+	get mass() {
+		return this.density * Math.PI * this.radius * this.radius;
 	}
 
 	fillText(context) {
@@ -48,7 +55,6 @@ class Ball {
 		this.radius = radius;
 		this.accelarationY = gravity;
 
-		console.log(this.VelocityX, this.VelocityY);
 		if (Math.abs(this.VelocityX) <= 5 && Math.abs(this.VelocityY) <= 5) {
 			this.VelocityX = 0;
 			this.VelocityY = 0;
@@ -85,6 +91,25 @@ class Ball {
 		this.x += this.VelocityX * dt;
 		this.y += this.VelocityY * dt;
 	}
+
+	detectCollision(anotherBall) {
+		let dist = Math.sqrt(
+			(this.x - anotherBall.x) ** 2 + (this.y - anotherBall.y) ** 2,
+		);
+		if (dist > this.radius + anotherBall.radius) return;
+		else {
+			let overLap = dist - (this.radius + anotherBall.radius);
+			this.x += overLap / 2;
+			this.y += overLap / 2;
+			anotherBall.x -= overLap / 2;
+			anotherBall.y -= overLap / 2;
+			this.VelocityX *= -this.restituion;
+			this.VelocityY *= -this.restituion;
+			anotherBall.VelocityX *= -anotherBall.restituion;
+			anotherBall.VelocityY *= -anotherBall.restituion;
+			console.error("Balls collided");
+		}
+	}
 }
 
 (() => {
@@ -109,9 +134,10 @@ class Ball {
 		x: width / 2,
 		y: height / 2,
 		radius: min_radius,
-		text: "hackCBS",
+		text: "🚀",
 		VelocityX: speed * randomDirection(),
 		VelocityY: speed * randomDirection(),
+		density: 10,
 	});
 	let ball2;
 
@@ -170,10 +196,12 @@ class Ball {
 				text: "Kronos",
 				VelocityX: speed * randomDirection(),
 				VelocityY: speed * randomDirection(),
+				density: 10,
 			});
 		}
 		ball1.updateCoordinates(radius, padding, width, height, dt, 1300);
 		ball2.updateCoordinates(radius, padding, width, height, dt, 1300);
+		ball1.detectCollision(ball2);
 
 		context.clearRect(0, 0, width, height);
 
