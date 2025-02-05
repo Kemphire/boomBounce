@@ -5,3 +5,6 @@
 - [ ] handle eventlistners in a seperate threads using web workers
 - [ ] implement concept of weight also 
     - HINT: Give a constant mass for 1 px^2 area, and then adjust velocity and acceleration of the same
+
+- [ ] combine the vectors together in a 2 element array's for better handling
+
