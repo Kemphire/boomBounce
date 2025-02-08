@@ -143,8 +143,8 @@ export class Ball {
 				velChange.y = (velChange.y / changeMagnitude) * maxVelChange;
 			}
 
-			other.vel.VelocityX += velChange.x;
-			other.vel.VelocityY += velChange.y;
+			other.vel.VelocityX += -velChange.x;
+			other.vel.VelocityY += -velChange.y;
 
 			this.pos.x -= overLap / 2;
 			this.pos.y -= overLap / 2;

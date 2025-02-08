@@ -1,4 +1,6 @@
 import { Ball } from "./ball.js";
+import "./index.css";
+import "./reset.css";
 
 (() => {
 	const canvas = document.getElementById("game");
@@ -23,10 +25,10 @@ import { Ball } from "./ball.js";
 		y: window.innerHeight / 2,
 		radius: 20,
 		text: "A",
-		density: 0.001,
+		density: 0.000001,
 		color: "red",
-		VelocityX: 10000,
-		VelocityY: 200,
+		VelocityX: 50,
+		VelocityY: 0,
 	});
 	let ball2 = new Ball({
 		x: min_radius,
@@ -35,8 +37,8 @@ import { Ball } from "./ball.js";
 		text: "B",
 		density: 0.00001,
 		color: "blue",
-		VelocityX: -1000,
-		VelocityY: -1000,
+		VelocityX: 100,
+		VelocityY: 100,
 	});
 
 	sliderInputSpeed.addEventListener("input", () => {

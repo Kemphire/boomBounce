@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vite App</title>
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+	<div class="slider">
+			<label for="sliderInputRadius">Radius</label>
+			<input id="sliderInputRadius" type="range" min="20" max="200" value="50">
+			<label for="sliderInputSpeed">Speed</label>
+			<input id="sliderInputSpeed" type="range" min="200" max="10000" value="500" style="color: red;">
+			<label for="favcolor">Colour</label>
+	<input type="color" id="favcolor" value="#ff0000">
+	</div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
